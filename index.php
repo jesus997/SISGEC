@@ -55,6 +55,8 @@
       <div class="card-body">
         <h5 class="card-title">Salón Rubí</h5>
         <p class="card-text">Salón para eventos recreativos y sociales: aniversarios, bodas, cumpleaños, XV años, bautismos, comuniones, conmemoraciones, graduaciones, reuniones empresariales y universitarias, shows y animaciones.</p>
+        <p class="card-text">Capacidad: </p>
+        <p class="card-text">Costo de alquiler por hora: </p>
       </div>
       <div class="card-footer">
         <a href="vistas/rubi.php" class="btn btn-dark">Eventos</a>
@@ -65,6 +67,8 @@
       <div class="card-body">
         <h5 class="card-title">Salón Esmeralda</h5>
         <p class="card-text">Salón para debates, paneles, mesas redondas, talleres y seminarios entre otros.</p>
+        <p class="card-text">Capacidad: </p>
+        <p class="card-text">Costo de alquiler por hora: </p>
       </div>
       <div class="card-footer">
         <a href="vistas/esmeralda.php" class="btn btn-dark">Eventos</a>
@@ -75,6 +79,8 @@
       <div class="card-body">
         <h5 class="card-title">Salón Aguamarina</h5>
         <p class="card-text">Salón audiovisual para conferencias, simposios, congresos, convenciones, foros y cursos entre otros.</p>
+        <p class="card-text">Capacidad: </p>
+        <p class="card-text">Costo de alquiler por hora: </p>
       </div>
       <div class="card-footer">
         <a href="vistas/aguamarina.php" class="btn btn-dark">Eventos</a>
