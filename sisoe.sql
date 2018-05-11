@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
--- https://www.phpmyadmin.net/
+-- version 4.4.15.5
+-- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 11-05-2018 a las 00:00:34
--- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.2.3
+-- Host: localhost:3306
+-- Generation Time: May 11, 2018 at 12:24 AM
+-- Server version: 5.5.49-log
+-- PHP Version: 7.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,17 +17,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `sisoe`
+-- Database: `sisoe`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `direccion`
+-- Table structure for table `direccion`
 --
 
-CREATE TABLE `direccion` (
-  `idDireccion` int(10) UNSIGNED ZEROFILL NOT NULL,
+CREATE TABLE IF NOT EXISTS `direccion` (
+  `idDireccion` int(10) unsigned zerofill NOT NULL,
   `Calle` varchar(45) NOT NULL,
   `NumeroExt` varchar(6) DEFAULT NULL,
   `NumeroInt` varchar(6) DEFAULT NULL,
@@ -38,15 +36,22 @@ CREATE TABLE `direccion` (
   `Estado` varchar(45) NOT NULL,
   `Pais` varchar(45) NOT NULL,
   `CodigoPostal` int(8) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `direccion`
+--
+
+INSERT INTO `direccion` (`idDireccion`, `Calle`, `NumeroExt`, `NumeroInt`, `Colonia`, `Municipio`, `Estado`, `Pais`, `CodigoPostal`) VALUES
+(0000000001, 'Tulipan', '1270', '', 'La Floresta', 'Puerto Vallarta', 'Jalisco', 'Mexico', 48290);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `eventos`
+-- Table structure for table `eventos`
 --
 
-CREATE TABLE `eventos` (
+CREATE TABLE IF NOT EXISTS `eventos` (
   `idEvento` int(11) NOT NULL,
   `Nombre` varchar(120) DEFAULT NULL,
   `Tipo` varchar(45) DEFAULT NULL,
@@ -54,67 +59,102 @@ CREATE TABLE `eventos` (
   `FechaInicio` datetime DEFAULT NULL,
   `FechaFin` datetime DEFAULT NULL,
   `Asistentes` longtext
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `eventos`
+--
+
+INSERT INTO `eventos` (`idEvento`, `Nombre`, `Tipo`, `Cronograma`, `FechaInicio`, `FechaFin`, `Asistentes`) VALUES
+(1, 'Convencion de Anime', 'reunion', 'Esto es un ejemplo de un cronograma.', '2018-05-01 04:12:25', '2018-05-11 11:47:33', 'Jose\r\nAlexis\r\nJuan Carlos'),
+(2, 'Bautizo Ruben', 'Familiar', 'Esto es otro ejemplo de un cronograma', '2018-05-17 00:00:00', '2018-05-31 00:00:00', 'Jesus\r\nJose\r\nMaria\r\nPepe\r\nLupita'),
+(3, 'Baile de find e curso', 'Escolar', 'Esto es un cronograma', '2018-05-02 04:23:27', '2018-05-03 02:04:13', 'Jose\r\nPepe\r\nMaria\r\nJuan\r\nJulian\r\nSandra\r\nVictoria');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `eventos_has_salones`
+-- Table structure for table `eventos_has_salones`
 --
 
-CREATE TABLE `eventos_has_salones` (
+CREATE TABLE IF NOT EXISTS `eventos_has_salones` (
   `Eventos_idEvento` int(11) NOT NULL,
   `Salones_idSalon` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `eventos_has_salones`
+--
+
+INSERT INTO `eventos_has_salones` (`Eventos_idEvento`, `Salones_idSalon`) VALUES
+(1, 1),
+(2, 1),
+(2, 2),
+(3, 3);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `organizadores`
+-- Table structure for table `personas`
 --
 
-CREATE TABLE `organizadores` (
-  `idOrganizador` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `personas` (
   `idPersona` int(11) NOT NULL,
-  `RFC` varchar(20) DEFAULT NULL,
-  `Eventos_idEvento` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `personas`
---
-
-CREATE TABLE `personas` (
-  `idPersona` int(11) NOT NULL,
-  `Nombres` varchar(45) NOT NULL,
-  `Apellidos` varchar(45) NOT NULL,
+  `Nombres` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `Apellidos` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `Correo` varchar(50) NOT NULL,
   `Contrasena` varchar(72) NOT NULL,
   `Empresa` varchar(255) DEFAULT NULL,
-  `Direccion_idDireccion` int(10) UNSIGNED ZEROFILL NOT NULL,
+  `Direccion_idDireccion` int(10) unsigned zerofill NOT NULL,
   `Telefono` int(10) DEFAULT NULL,
-  `Tipo` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `RFC` varchar(15) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `Tipo` int(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `personas`
+--
+
+INSERT INTO `personas` (`idPersona`, `Nombres`, `Apellidos`, `Correo`, `Contrasena`, `Empresa`, `Direccion_idDireccion`, `Telefono`, `RFC`, `Tipo`) VALUES
+(11, 'Jes&uacute;s', 'Magall&oacute;n', 'magallonj23@gmail.com', '$2y$10$VWR7ncgAsCX6ae6zWtoOe.FG6OSM655xLQyKCDmg8YFWdnZi6TH4.', '', 0000000001, 0, '', 0),
+(12, 'Jose Luis', 'Padilla', 'jose_luis@gmail.com', '$2y$10$z6udqWhxEPICEJ7Xzf0S9ekekCW8/uPbMQST2RrGYJox/dn2bUCnW', '', 0000000001, 0, '', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `proveedores`
+-- Table structure for table `personas_has_eventos`
 --
 
-CREATE TABLE `proveedores` (
+CREATE TABLE IF NOT EXISTS `personas_has_eventos` (
+  `Personas_idPersona` int(11) NOT NULL,
+  `Eventos_idEvento` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `personas_has_eventos`
+--
+
+INSERT INTO `personas_has_eventos` (`Personas_idPersona`, `Eventos_idEvento`) VALUES
+(11, 1),
+(11, 2),
+(11, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `proveedores`
+--
+
+CREATE TABLE IF NOT EXISTS `proveedores` (
   `idProveedor` int(11) NOT NULL,
   `Nombre` varchar(50) DEFAULT NULL,
   `Tipo` varchar(45) DEFAULT NULL,
   `Correo` varchar(50) DEFAULT NULL,
   `Telefono` varchar(20) DEFAULT NULL,
   `Descripcion` varchar(120) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `proveedores`
+-- Dumping data for table `proveedores`
 --
 
 INSERT INTO `proveedores` (`idProveedor`, `Nombre`, `Tipo`, `Correo`, `Telefono`, `Descripcion`) VALUES
@@ -125,43 +165,45 @@ INSERT INTO `proveedores` (`idProveedor`, `Nombre`, `Tipo`, `Correo`, `Telefono`
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `salones`
+-- Table structure for table `salones`
 --
 
-CREATE TABLE `salones` (
+CREATE TABLE IF NOT EXISTS `salones` (
   `idSalon` int(11) NOT NULL,
-  `Nombre` varchar(45) DEFAULT NULL,
+  `Nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Descripcion` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `Capacidad` smallint(3) DEFAULT NULL,
-  `Tipo` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Tipo` varchar(20) DEFAULT NULL,
+  `imagen` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `salones`
+-- Dumping data for table `salones`
 --
 
-INSERT INTO `salones` (`idSalon`, `Nombre`, `Capacidad`, `Tipo`) VALUES
-(1, 'Rubí', 120, 'Festivo'),
-(2, 'Esmeralda', 80, 'Multiproposito'),
-(3, 'Aguamarina', 100, 'Audiovisual');
+INSERT INTO `salones` (`idSalon`, `Nombre`, `Descripcion`, `Capacidad`, `Tipo`, `imagen`) VALUES
+(1, 'Rub&iacute;', 'Sal&oacute;n para eventos recreativos y sociales: aniversarios, bodas, cumplea&ntilde;os, XV a&ntilde;os, bautismos, comuniones, conmemoraciones, graduaciones, reuniones empresariales y universitarias, shows y animaciones.', 120, 'Festivo', '{local}/assets/imagenes/rubi.jpg'),
+(2, 'Esmeralda', 'Sal&oacute;n para debates, paneles, mesas redondas, talleres y seminarios entre otros.', 80, 'Multiproposito', '{local}/assets/imagenes/esmeralda2.jpg'),
+(3, 'Aguamarina', 'Sal&oacute;n audiovisual para conferencias, simposios, congresos, convenciones, foros y cursos entre otros.', 100, 'Audiovisual', '{local}/assets/imagenes/aguamarina4.jpg');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `direccion`
+-- Indexes for table `direccion`
 --
 ALTER TABLE `direccion`
   ADD PRIMARY KEY (`idDireccion`);
 
 --
--- Indices de la tabla `eventos`
+-- Indexes for table `eventos`
 --
 ALTER TABLE `eventos`
   ADD PRIMARY KEY (`idEvento`);
 
 --
--- Indices de la tabla `eventos_has_salones`
+-- Indexes for table `eventos_has_salones`
 --
 ALTER TABLE `eventos_has_salones`
   ADD PRIMARY KEY (`Eventos_idEvento`,`Salones_idSalon`),
@@ -169,96 +211,83 @@ ALTER TABLE `eventos_has_salones`
   ADD KEY `fk_Eventos_has_Salones_Eventos1_idx` (`Eventos_idEvento`);
 
 --
--- Indices de la tabla `organizadores`
---
-ALTER TABLE `organizadores`
-  ADD PRIMARY KEY (`idOrganizador`,`idPersona`,`Eventos_idEvento`),
-  ADD UNIQUE KEY `idPersona_UNIQUE` (`idPersona`),
-  ADD KEY `fk_Organizadores_Eventos1_idx` (`Eventos_idEvento`);
-
---
--- Indices de la tabla `personas`
+-- Indexes for table `personas`
 --
 ALTER TABLE `personas`
   ADD PRIMARY KEY (`idPersona`,`Correo`,`Direccion_idDireccion`),
   ADD KEY `fk_Personas_Direccion1_idx` (`Direccion_idDireccion`);
 
 --
--- Indices de la tabla `proveedores`
+-- Indexes for table `personas_has_eventos`
+--
+ALTER TABLE `personas_has_eventos`
+  ADD KEY `Personas_idPersona` (`Personas_idPersona`),
+  ADD KEY `Eventos_idEvento` (`Eventos_idEvento`);
+
+--
+-- Indexes for table `proveedores`
 --
 ALTER TABLE `proveedores`
   ADD PRIMARY KEY (`idProveedor`);
 
 --
--- Indices de la tabla `salones`
+-- Indexes for table `salones`
 --
 ALTER TABLE `salones`
   ADD PRIMARY KEY (`idSalon`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `direccion`
+-- AUTO_INCREMENT for table `direccion`
 --
 ALTER TABLE `direccion`
-  MODIFY `idDireccion` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
-
+  MODIFY `idDireccion` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `eventos`
+-- AUTO_INCREMENT for table `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `organizadores`
---
-ALTER TABLE `organizadores`
-  MODIFY `idOrganizador` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `personas`
+-- AUTO_INCREMENT for table `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
--- AUTO_INCREMENT de la tabla `proveedores`
+-- AUTO_INCREMENT for table `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT de la tabla `salones`
+-- AUTO_INCREMENT for table `salones`
 --
 ALTER TABLE `salones`
-  MODIFY `idSalon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idSalon` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- Constraints for dumped tables
+--
 
 --
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `eventos_has_salones`
+-- Constraints for table `eventos_has_salones`
 --
 ALTER TABLE `eventos_has_salones`
   ADD CONSTRAINT `fk_Eventos_has_Salones_Eventos1` FOREIGN KEY (`Eventos_idEvento`) REFERENCES `eventos` (`idEvento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Eventos_has_Salones_Salones1` FOREIGN KEY (`Salones_idSalon`) REFERENCES `salones` (`idSalon`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `organizadores`
---
-ALTER TABLE `organizadores`
-  ADD CONSTRAINT `Organizadores tienen` FOREIGN KEY (`idPersona`) REFERENCES `personas` (`idPersona`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Organizadores_Eventos1` FOREIGN KEY (`Eventos_idEvento`) REFERENCES `eventos` (`idEvento`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `personas`
+-- Constraints for table `personas`
 --
 ALTER TABLE `personas`
   ADD CONSTRAINT `fk_Personas_Direccion1` FOREIGN KEY (`Direccion_idDireccion`) REFERENCES `direccion` (`idDireccion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-COMMIT;
+
+--
+-- Constraints for table `personas_has_eventos`
+--
+ALTER TABLE `personas_has_eventos`
+  ADD CONSTRAINT `fk_Personas_has_Eventos_Eventos1` FOREIGN KEY (`Eventos_idEvento`) REFERENCES `eventos` (`idEvento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Personas_has_Eventos_Personas1` FOREIGN KEY (`Personas_idPersona`) REFERENCES `personas` (`idPersona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
