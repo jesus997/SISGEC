@@ -39,8 +39,16 @@ $router->group(['before' => 'auth'], function($router){
 	$router->post(["{$P}/evento/{id}/editar", "post-editar-evento"], ['Jess\Messenger\EventosController', 'eGuardarEvento']);
 	$router->post(["{$P}/evento/{id}/borrar", "borrar-evento"], ['Jess\Messenger\EventosController', 'borrarEvento']);
 
+	$router->get(["{$P}/organizadores", "organizadores"], ['Jess\Messenger\OrganizadorController', 'index']);
+	$router->get(["{$P}/organizadores/nuevo", "nuevo-organizador"], ['Jess\Messenger\OrganizadorController', 'nuevo']);
+	$router->post(["{$P}/organizadores/nuevo", "post-nuevo-organizador"], ['Jess\Messenger\OrganizadorController', 'guardar']);
+	$router->get(["{$P}/organizador/{id}/editar", "editar-organizador"], ['Jess\Messenger\OrganizadorController', 'editar']);
+	$router->post(["{$P}/organizador/{id}/editar", "post-editar-organizador"], ['Jess\Messenger\OrganizadorController', 'saveEditar']);
+	$router->post(["{$P}/organizador/{id}/borrar", "borrar-organizador"], ['Jess\Messenger\OrganizadorController', 'borrar']);
+
 	$router->post(["{$P}/reporte/mis-eventos", "reporte-eventos"], ['Jess\Messenger\EventosController', 'imprimirMisEventos']);
 	$router->post(["{$P}/reporte/salones", "reporte-salones"], ['Jess\Messenger\SalonesController', 'imprimirSalones']);
+	$router->post(["{$P}/reporte/organizadores", "reporte-organizadores"], ['Jess\Messenger\OrganizadorController', 'imprimirOrganizadores']);
 	
 	$router->get(["{$P}/logout", 'logout'],  ['Jess\Messenger\AuthController', 'logout']);
 });

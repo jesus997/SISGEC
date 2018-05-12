@@ -113,6 +113,13 @@
 							format: 'yyyy-mm-dd HH:MM:00'
 						});
 					}
+
+					if($('#datepicker3').length > 0) {
+						$('#datepicker3').datepicker({
+							uiLibrary: 'bootstrap4',
+							format: 'yyyy-mm-dd'
+						});
+					}
 				});
 			})(jQuery);
 		</script>
