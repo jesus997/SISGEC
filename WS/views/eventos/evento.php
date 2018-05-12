@@ -1,6 +1,6 @@
 
 <h2 class="display-4 text-center text-muted">Salón <?= $salon['response'][0]['Nombre'] ?></h2>
-
+<p class="text-center w-50 y-3 mx-auto"><?= $salon['response'][0]['Descripcion'] ?></p>
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -10,20 +10,29 @@
         <th scope="col">Nombre</th>
         <th scope="col">Tipo</th>
         <th scope="col">Invitados</th>
-        <th scope="col">Cronograma</th>
+        <th scope="col">Cronograma</th><?php
+        if($auth->isAdmin()) { ?>
+            <th colspan="3" class="text-center">Acciones</th> <?php
+        } ?>
         </tr>
     </thead>
     <tbody> <?php
         if(count($eventos) > 0) {
             foreach($eventos as $evento) { ?>
                 <tr>
-                    <th scope="row"><?php $evento['idEvento'] ?></th>
+                    <th scope="row"><?= $evento['idEvento'] ?></th>
                     <td><?= $evento['FechaInicio'] ?></td>
                     <td><?= $evento['FechaFin'] ?></td>
                     <td><?= $evento['Nombre'] ?></td>
                     <td><?= $evento['Tipo'] ?></td>
                     <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#invitados-<?= $helper->slugify($evento['Nombre']).$evento['idEvento'] ?>">Lista invitados</button></td>
                     <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#programa-<?= $helper->slugify($evento['Nombre']).$evento['idEvento'] ?>">Cronograma</button></td>
+            <?php
+                if($auth->isAdmin()) { ?>
+                    <td><a class="btn btn-link text-secondary" href="<?= $helper->url("/evento/{$evento['idEvento']}/editar") ?>">Editar</a></td>
+                    <td><form action="<?= $helper->url("/evento/{$evento['idEvento']}/borrar") ?>" method="POST"><button class="btn btn-link text-danger">Borrar</button></form></td><?php
+                }
+            ?>
                 </tr> <?php
             }
         } else { ?>

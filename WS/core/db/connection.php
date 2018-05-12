@@ -40,6 +40,10 @@ class DB {
 		return ["code" => "ok", "response" => array()];
 	}
 
+	public function delete($table, $key, $value) {
+		return ( $this->CONNECTION->query("DELETE FROM {$table} WHERE {$key}={$value}") );
+	}
+
 	public function create($table, $query) {
 		$keys = "";
 		$values = "";
@@ -54,16 +58,14 @@ class DB {
 
 		$query = "INSERT INTO $table ($keys) VALUES($values)";
 
-		$this->CONNECTION->query($query) or die(\mysqli_error($this->CONNECTION));
-
-		//return ($this->CONNECTION->query($query) === TRUE);
+		return ($this->CONNECTION->query($query) === TRUE);
 	}
 
 	public function update($table, $key, $id, $query) {
 		$inputs = "";
 
-		foreach ($query as $key => $value) {
-			$inputs .= $key."='".$value."', ";
+		foreach ($query as $key1 => $value) {
+			$inputs .= $key1."='".$value."', ";
 		}
 
 		$inputs = rtrim($inputs,", ");
@@ -72,6 +74,10 @@ class DB {
 		$query = "UPDATE {$table} SET {$inputs} WHERE {$key}='{$id}'";
 
 		return ($this->CONNECTION->query($query) === TRUE);
+	}
+
+	public function getErrors() {
+		return $this->CONNECTION->error_list;
 	}
 
 	public function close(){

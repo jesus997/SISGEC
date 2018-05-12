@@ -32,6 +32,9 @@
 			}
 			if($auth->isAdmin()) { ?>
 				<li class="nav-item">
+					<a class="nav-link lead" href="<?= $helper->url("/salones") ?>">Salones</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link lead" href="<?= $helper->url("/organizadores") ?>">Organizadores</a>
 				</li> <?php
 			} ?>
@@ -77,5 +80,41 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
+  		<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+		<script src="<?= $helper->url("/assets/js/tinymce.min.js") ?>"></script>
+		<script src="<?= $helper->url("/assets/js/jquery.tinymce.min.js") ?>"></script>
+		<script type="text/javascript">
+			(function($) {
+				$('document').ready(function() {
+					if($('textarea.tinymce').length > 0) {
+						$('textarea.tinymce').tinymce({
+							plugins: [
+								'advlist autolink lists link charmap print preview anchor',
+								'searchreplace visualblocks fullscreen',
+								'insertdatetime table contextmenu paste'
+							],
+							branding: false,
+							height : 400,
+							toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link'
+						});
+					}
+
+					if($('.datepicker1').length > 0) {
+						$('.datepicker1').datetimepicker({
+							uiLibrary: 'bootstrap4',
+							format: 'yyyy-mm-dd HH:MM:00'
+						});
+					}
+
+					if($('.datepicker2').length > 0) {
+						$('.datepicker2').datetimepicker({
+							uiLibrary: 'bootstrap4',
+							format: 'yyyy-mm-dd HH:MM:00'
+						});
+					}
+				});
+			})(jQuery);
+		</script>
 	</body>
 </html>

@@ -2,8 +2,9 @@
 <div class="col-8 align-self-right">
     <h2 class="display-4 text-center text-muted">Mis Eventos</h2>
 </div>
-<div class="col-2 align-self-center text-center">
+<div class="col-4 align-self-center text-center">
     <a class="btn btn-dark" href="<?= $helper->url("/eventos/nuevo") ?>" role="button">Crear nuevo Evento</a>
+    <form class="d-inline" target="_blank" action="<?= $helper->url("/reporte/mis-eventos") ?>" method="POST"><button class="btn btn-dark" type="submit">Imprimir</button></form>
 </div>
 </div>
 <table class="table">
@@ -18,6 +19,7 @@
         <th scope="col">Participantes</th>
         <th scope="col">Cronograma</th>
         <th scope="col">Estado</th>
+        <th colspan="2" class="text-center">Acciones</th>
         </tr>
     </thead>
     <tbody><?php
@@ -31,7 +33,7 @@
                     $status = "finalizado";
                 } ?>
                 <tr>
-                    <th scope="row"><?php $evento['idEvento'] ?></th>
+                    <th scope="row"><?= $evento['idEvento'] ?></th>
                     <td><?= $evento['salon'] ?></td>
                     <td><?= $evento['FechaInicio'] ?></td>
                     <td><?= $evento['FechaFin'] ?></td>
@@ -52,6 +54,8 @@
                                 break;
                         } ?>
                     </td>
+                    <td><a class="btn btn-link text-secondary" href="<?= $helper->url("/evento/{$evento['idEvento']}/editar") ?>">Editar</a></td>
+                    <td><form action="<?= $helper->url("/evento/{$evento['idEvento']}/borrar") ?>" method="POST"><button class="btn btn-link text-danger">Borrar</button></form></td>
                 </tr> <?php
             }
         } else { ?>

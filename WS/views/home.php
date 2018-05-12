@@ -7,7 +7,7 @@ if($salones['code'] === "ok" && count($salones['response']) > 0) {
             <div class="card-body">
                 <h5 class="card-title"><?= $salon['Nombre'] ?></h5>
                 <p class="card-text"><?= $salon['Descripcion'] ?></p>
-                <p class="card-text">Capacidad: <?= $salon['Capacidad'] ?></p>
+                <p class="card-text">Capacidad: <?= $salon['Capacidad'] ?> personas</p>
                 <p class="card-text">Tipo de salon: <?= $salon['Tipo'] ?> </p>
             </div>
             <div class="card-footer">
