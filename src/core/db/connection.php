@@ -32,12 +32,12 @@ class DB {
 	public function query($sql) {
 		$result = $this->CONNECTION->query($sql);
 		if( $this->CONNECTION->errno != 0 ) {
-			return ["code" => "error", "response" => $this->CONNECTION->error_list]; 
+			return $this->CONNECTION->error_list; 
 		}
 		if ($result->num_rows > 0) {
-			return ["code" => "ok", "response" => $this->resultToArray($result)];
+			return $this->resultToArray($result);
 		}
-		return ["code" => "ok", "response" => array()];
+		return array();
 	}
 
 	public function delete($table, $key, $value) {

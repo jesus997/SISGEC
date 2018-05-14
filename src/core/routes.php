@@ -4,7 +4,7 @@
  * Docs: https://github.com/mrjgreen/phroute
  */
 
-$P = "/SISOE/WS";
+$P = $config->get("site.url");
 
 $router->filter('auth', function(){
 	global $auth, $router, $P;
@@ -20,35 +20,9 @@ $router->get(["{$P}/login", 'login'],  ['Jess\Messenger\AuthController', 'index'
 $router->post("{$P}/login",  ['Jess\Messenger\AuthController', 'login']);
 $router->get(["{$P}/register", 'register'],  ['Jess\Messenger\AuthController', 'register']);
 
-$router->get(["{$P}/", 'home'],  ['Jess\Messenger\HomeController', 'index']);
-$router->get(["{$P}/salon/{id}/eventos", 'salon'], ['Jess\Messenger\EventosController', 'index']);
-
 $router->group(['before' => 'auth'], function($router){
 	global $P;
-	$router->get(["{$P}/mis-eventos", "mis-eventos"], ['Jess\Messenger\EventosController', 'misEventos']);
-	$router->get(["{$P}/salones", "salones"], ['Jess\Messenger\SalonesController', 'index']);
-	$router->get(["{$P}/salones/nuevo", "nuevo-salon"], ['Jess\Messenger\SalonesController', 'nuevo']);
-	$router->post(["{$P}/salones/nuevo", "post-nuevo-salon"], ['Jess\Messenger\SalonesController', 'guardar']);
-	$router->get(["{$P}/salon/{id}/editar", "editar-salon"], ['Jess\Messenger\SalonesController', 'editar']);
-	$router->post(["{$P}/salon/{id}/editar", "post-editar-salon"], ['Jess\Messenger\SalonesController', 'editarGuardar']);
-	$router->post(["{$P}/salon/{id}/borrar", "borrar-salon"], ['Jess\Messenger\SalonesController', 'borrar']);
-
-	$router->get(["{$P}/eventos/nuevo", "nuevo-evento"], ['Jess\Messenger\EventosController', 'nuevoEvento']);
-	$router->post(["{$P}/eventos/nuevo", "post-nuevo-evento"], ['Jess\Messenger\EventosController', 'guardarEvento']);
-	$router->get(["{$P}/evento/{id}/editar", "editar-evento"], ['Jess\Messenger\EventosController', 'editarEvento']);
-	$router->post(["{$P}/evento/{id}/editar", "post-editar-evento"], ['Jess\Messenger\EventosController', 'eGuardarEvento']);
-	$router->post(["{$P}/evento/{id}/borrar", "borrar-evento"], ['Jess\Messenger\EventosController', 'borrarEvento']);
-
-	$router->get(["{$P}/organizadores", "organizadores"], ['Jess\Messenger\OrganizadorController', 'index']);
-	$router->get(["{$P}/organizadores/nuevo", "nuevo-organizador"], ['Jess\Messenger\OrganizadorController', 'nuevo']);
-	$router->post(["{$P}/organizadores/nuevo", "post-nuevo-organizador"], ['Jess\Messenger\OrganizadorController', 'guardar']);
-	$router->get(["{$P}/organizador/{id}/editar", "editar-organizador"], ['Jess\Messenger\OrganizadorController', 'editar']);
-	$router->post(["{$P}/organizador/{id}/editar", "post-editar-organizador"], ['Jess\Messenger\OrganizadorController', 'saveEditar']);
-	$router->post(["{$P}/organizador/{id}/borrar", "borrar-organizador"], ['Jess\Messenger\OrganizadorController', 'borrar']);
-
-	$router->post(["{$P}/reporte/mis-eventos", "reporte-eventos"], ['Jess\Messenger\EventosController', 'imprimirMisEventos']);
-	$router->post(["{$P}/reporte/salones", "reporte-salones"], ['Jess\Messenger\SalonesController', 'imprimirSalones']);
-	$router->post(["{$P}/reporte/organizadores", "reporte-organizadores"], ['Jess\Messenger\OrganizadorController', 'imprimirOrganizadores']);
+	$router->get(["{$P}/", 'home'],  ['Jess\Messenger\HomeController', 'index']);
 	
 	$router->get(["{$P}/logout", 'logout'],  ['Jess\Messenger\AuthController', 'logout']);
 });

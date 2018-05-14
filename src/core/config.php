@@ -4,7 +4,7 @@ return [
 	'site' => array(
 		'name' => 'Salones Crystal',
 		'description' => 'Eventos',
-		'url' => '/SISOE/WS'
+		'url' => '/SISGEC/WS/src'
 	),
 	'db' => array(
 		'server' => 'localhost',

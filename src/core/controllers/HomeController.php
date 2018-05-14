@@ -15,7 +15,6 @@ class HomeController extends ControllerManager {
 		global $db;
 		$data['page_name'] = "Home";
 		$data['file_name'] = "home";
-		$data['salones'] = $db->query("SELECT * from salones");
 		$this->view("base", $data);
 	}
 

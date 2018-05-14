@@ -40,15 +40,20 @@ $db = new DB();
 $auth = new Auth();
 
 /**
- * Auto carga de controladores
+ * Auto carga de modelos y controladores
  */
 function controller_autoload ($controller_name) {
+	$dirs = ["models", "controllers"];
 	$file = $controller_name;
 	if(strpos($controller_name, '\\') !== false) {
 		$file = explode('\\', $controller_name);
 		$file = $file[count($file)-1];
 	}
-	include_once(__DIR__ . "/controllers/" . $file . ".php");
+	foreach ($dirs as $dir) {
+		if(file_exists(__DIR__ . "/{$dir}/{$file}.php")) {
+			include_once(__DIR__ . "/{$dir}/{$file}.php");
+		}
+	}
 }
 spl_autoload_register("Jess\Messenger\controller_autoload");
 

@@ -17,8 +17,8 @@ class AuthController extends ControllerManager{
 			$this->redirect($config->get("site.url"));
 		}
 		$data['page_name'] = 'Login';
-		$data['file_name'] = 'login';
-		$this->view('auth/base', $data);
+		$data['file_name'] = 'auth/login';
+		$this->view('base', $data);
 	}
 
 	public function login() {
