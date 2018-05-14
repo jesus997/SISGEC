@@ -17,8 +17,10 @@
           <?php if( $auth->check() ) { ?>
             <!-- Only in desktop nav -->
             <div class="nav-item dropdown d-none d-sm-block">
-              <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $auth->get("fullname") ?></a>
+              <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $auth->fullname ?></a>
               <div class="dropdown-menu account-menu" aria-labelledby="header-account-menu-link">
+                <span class="dropdown-item-text"><?= $auth->job ?></span>
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?= $helper->url("/account") ?>">Settings</a>
                 <a class="dropdown-item" href="<?= $helper->url("/logout") ?>">Sign out</a>
               </div>

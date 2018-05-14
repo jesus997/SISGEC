@@ -10,15 +10,15 @@
       <hr/>
       <form action="<?= $helper->url("/login") ?>" method="POST">
         <div class="form-group">
-          <input type="email" name="email" class="form-control<?= $errorClass ?>" placeholder="Email" focus-first> <?php
+          <input type="email" name="email" class="form-control<?= isset($error) && $error === $errorsList[0] ? $errorClass : "" ?>" placeholder="Email" focus-first> <?php
 		  if(isset($error) && $error === "invalid-email") { ?>
-          	<div class="invalid-feedback">Por favor ingresa un correo electronico valido.</div> <?php
+          	<div class="invalid-feedback">No existe un usuario con este correo o no es un correo electronico valido.</div> <?php
 		  } ?>
         </div>
         <div class="form-group">
-          <input type="password" name="password" class="form-control<?= $errorClass ?>" placeholder="Contraseña"> <?php
+          <input type="password" name="password" class="form-control<?= isset($error) && $error === $errorsList[1] ? $errorClass : "" ?>" placeholder="Contraseña"> <?php
 		  if(isset($error) && $error === "invalid-password") { ?>
-          	<div class="invalid-feedback">Por favor ingresa tu contraseña.</div> <?php
+          	<div class="invalid-feedback">La contraseña es incorrecta.</div> <?php
 		  } ?>
         </div> <?php
 		if(isset($error) && !in_array($error, $errorsList)) { ?>

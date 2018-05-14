@@ -5,38 +5,48 @@ namespace Jess\Messenger;
 * Model Manager
 */
 class ModelManager {
-    protected $db, $config, $auth, $helper;
-    
     /**
      * Nombre de la tabla asociada a este modelo
      */
-    protected $table;
+    static protected $table;
 
     /**
      * Nombre del campo primario o id (primary key)
      */
-    protected $id;
+    static protected $id;
 
     /**
      * Campos de la tabla protegidos (no se retornan)
      */
-    protected $protectedFields = ["password"];
+    static protected $protectedFields = ["password"];
 
-	function __construct() {
-        global $db, $config, $auth, $helper;
-        $this->config = $config;
-        $this->auth = $auth;
-        $this->helper = $auth;
-        $this->db = $db;
+    protected $model_data;
+
+    public function __get($varName){
+
+        if (!array_key_exists($varName,$this->model_data)){
+            //this attribute is not defined!
+            throw new \Exception("Undefined variable '{$varName}' in ". \get_called_class() ." model.");
+        }
+        else return $this->model_data[$varName];
+  
+    }
+  
+    public function __set($varName,$value){
+        $this->model_data[$varName] = $value;
     }
     
-    private function removeProtectedFields($results) {
+    public function __construct($id){
+        $this->data = self::get($id);
+    }
+
+    static function removeProtectedFields($results) {
         if(count($results) > 0) {
             foreach ($results as $key => $value) {
                 if(is_array($value)) {
-                    $results[$key] = $this->removeProtectedFields($value);
+                    $results[$key] = static::removeProtectedFields($value);
                 } else {
-                    if(in_array($key, $this->protectedFields)) {
+                    if(in_array($key, static::$protectedFields)) {
                         unset($results[$key]);
                     }
                 }
@@ -45,64 +55,71 @@ class ModelManager {
         return $results;
     }
 
-	public function getAll() {
-        $results = $this->db->query("SELECT * FROM {$this->table}");
-        return $this->toObject($this->removeProtectedFields($results));
+	static function getAll() {
+        global $db;
+        $results = $db->query("SELECT * FROM {static::$table}");
+        return static::toObject(static::removeProtectedFields($results));
     }
 
-    public function get($key, $value = "undefined") {
+    static function get($key, $value = "undefined") {
         $result = [];
         if($value === "undefined") {
-            $result = $this->getByID($key);
+            $result = static::getByID($key);
         } else if(is_array($key)) {
-            $result = $this->getByArray($key, $value === "undefined" ? "AND" : $value);
+            $result = static::getByArray($key, $value === "undefined" ? "AND" : $value);
         } else {
-            $result = $this->getByKey($key, $value);
+            $result = static::getByKey($key, $value);
         }
-        return $this->toObject($this->removeProtectedFields($result));
+        return static::toObject($result);
     }
 
-    public function getByID($value) {
-        $result = $this->db->query("SELECT * FROM {$this->table} WHERE {$this->id}='{$value}'");
-        return $this->removeProtectedFields($result);
+    static function getByID($value) {
+        global $db;
+        $result = $db->query("SELECT * FROM ".static::$table." WHERE ".static::$id."='{$value}'");
+        return static::removeProtectedFields($result);
     }
 
-    public function getByArray($arr, $method="AND") {
+    static function getByArray($arr, $method="AND") {
+        global $db;
         $query = "";
         foreach ($key as $k => $v) {
             $query .= "{$k}='{$v}' {$method} ";
         }
         $query = rtrim($query,"{$method} ");
-        $result = $this->db->query("SELECT * FROM {$this->table} WHERE {$query}");
+        $result = $db->query("SELECT * FROM ".static::$table." WHERE {$query}");
 
-        return $this->removeProtectedFields($result);
+        return static::removeProtectedFields($result);
     }
 
-    public function getByKey($key, $value) {
-        $result = $this->db->query("SELECT * FROM {$this->table} WHERE {$key}='{$value}'");
-        return $this->removeProtectedFields($result);
+    static function getByKey($key, $value) {
+        global $db;
+        $result = $db->query("SELECT * FROM ".static::$table." WHERE {$key}='{$value}'");
+        return static::removeProtectedFields($result);
     }
 
-    public function new($data = []) {
+    static function new($data = []) {
+        global $db;
         if(count($data) > 0) {
-            $result = $this->db->create($this->table, $data);
+            $result = $db->create(static::$table, $data);
             if($result) {
-                return $this->toObject($this->getByArray($data));
+                return static::toObject(static::getByArray($data));
             }
         }
         return false;
     }
 
-    public function remove($id = "undefined") {
+    static function remove($id = "undefined") {
+        global $db;
         if($id !== "undefined") {
-            return $this->db->delete($this->table, $this->id, $id);
+            return $db->delete(static::$table, static::$id, $id);
         }
         return false;
     }
 
-    public function edit($id = "undefined", $data = []) {
+    static function edit($id = "undefined", $data = []) {
+        global $db;
         if($id !== "undefined") {
-            return $this->db->update($this->table, $this->id, $id, $data);
+            return $db->update(static::$table, static::$id, $id, $data);
         }
         return false;
     }
@@ -111,10 +128,16 @@ class ModelManager {
      * By Chris Jeffries
      * https://stackoverflow.com/a/47219704
      */
-    private function toObject($arr) {
-        $innerfunc = function ($a) use ( &$innerfunc ) {
-           return (is_array($a)) ? (object) array_map($innerfunc, $a) : $a; 
-        };
-        return (object) array_map($innerfunc, $arr);
+    static function toObject($arr) {
+        if(is_array($arr)) {
+            if(count($arr) == 1) {
+                $arr = $arr[0];
+            }
+            $innerfunc = function ($a) use ( &$innerfunc ) {
+                return (is_array($a)) ? (object) array_map($innerfunc, $a) : $a; 
+            };
+            return (object) array_map($innerfunc, $arr);
+        }
+        return self::toObject([$arr]);
     }
 }
