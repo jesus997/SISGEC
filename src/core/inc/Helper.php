@@ -7,8 +7,12 @@ class Helper {
         return $config->get("site.url").$slug;
     }
 
-    function dd($arr) {
+    function dd($arr, $arr2=false) {
         echo "<pre>"; print_r($arr); echo "</pre>";
+        if(is_array($arr2)) {
+            echo "<pre>"; print_r($arr2); echo "</pre>";
+        }
+        die();
     }
 
     function localImage($url) {
@@ -61,5 +65,26 @@ class Helper {
         if($date1 > $date2) return 1;
         if($date2 > $date1) return -1;
         return 0;
+    }
+
+    /**
+     * By nira
+     * https://stackoverflow.com/a/34413408
+     */
+    function calculeAge($date) {
+        //calculate years of age (input string: YYYY-MM-DD)
+        list($year, $month, $day) = explode("-", $date);
+
+        $year_diff  = date("Y") - $year;
+        $month_diff = date("m") - $month;
+        $day_diff   = date("d") - $day;
+
+        // if we are any month before the birthdate: year - 1 
+        // OR if we are in the month of birth but on a day 
+        // before the actual birth day: year - 1
+        if ( ($month_diff < 0 ) || ($month_diff === 0 && $day_diff < 0))
+            $year_diff--;   
+
+        return $year_diff;
     }
 }

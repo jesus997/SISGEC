@@ -31,6 +31,7 @@ $router->group(['before' => 'auth'], function($router){
 	$router->get(["{$P}/pacientes", "pacientes"], ['Jess\Messenger\PacientesController', 'index']);
 	$router->get(["{$P}/pacientes/nuevo", "nuevo-paciente"], ['Jess\Messenger\PacientesController', 'nuevo']);
 	$router->post(["{$P}/pacientes/nuevo", "guardar-paciente-nuevo"], ['Jess\Messenger\PacientesController', 'guardarNuevo']);
+	$router->get(["{$P}/paciente/{id}", "ver-paciente"], ['Jess\Messenger\PacientesController', 'verPaciente']);
 	
 	$router->get(["{$P}/logout", 'logout'],  ['Jess\Messenger\AuthController', 'logout']);
 });

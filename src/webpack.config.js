@@ -2,11 +2,12 @@ const path = require('path');
 const entry = require('webpack-glob-entry');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const env = process.env.NODE_ENV;
 
 module.exports = {
-    entry: entry("./assets/js/*.js", "./assets/css/importer.less"),
+    entry: entry("./assets/js/*.js", "./assets/vue/*.vue", "./assets/css/importer.less"),
     devtool: 'inline-source-map',
     output: {
         filename: '[name].min.js',
@@ -47,10 +48,14 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            publicPath: 'dist/'
+                            publicPath: '/SISGEC/WS/src/dist/'
                         }
                     }
                 ]
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
         ]
     },
@@ -62,13 +67,15 @@ module.exports = {
             new webpack.ProvidePlugin({
                 $: "jquery",
                 jQuery: "jquery"
-            })
+            }),
+            new VueLoaderPlugin()
         ]
         : [
             new webpack.ProvidePlugin({
                 $: "jquery",
                 jQuery: "jquery"
-            })
+            }),
+            new VueLoaderPlugin()
         ],
     mode: "development"
 };

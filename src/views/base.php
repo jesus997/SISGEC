@@ -53,5 +53,6 @@
 
 
     <script src="<?= $helper->url("/dist/main.min.js") ?>"></script>
+    <script src="<?= $helper->url("/dist/Address.min.js") ?>"></script>
   </body>
 </html>

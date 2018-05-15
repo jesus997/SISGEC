@@ -23,8 +23,11 @@ class ModelManager {
     protected $model_data;
 
     public function __get($varName){
-
+        global $helper;
         if (!array_key_exists($varName,$this->model_data)){
+            if($varName === "fullname") {
+                return $this->model_data['name']." ".$this->model_data['lastname'];
+            }
             //this attribute is not defined!
             throw new \Exception("Undefined variable '{$varName}' in ". \get_called_class() ." model.");
         }
@@ -37,7 +40,10 @@ class ModelManager {
     }
     
     public function __construct($id){
-        $this->data = self::get($id);
+        $this->model_data = self::getByID($id);
+        if(isset($this->model_data[0]) && is_array($this->model_data[0])) {
+            $this->model_data = $this->model_data[0];
+        }
     }
 
     static function removeProtectedFields($results) {
@@ -82,7 +88,7 @@ class ModelManager {
     static function getByArray($arr, $method="AND") {
         global $db;
         $query = "";
-        foreach ($key as $k => $v) {
+        foreach ($arr as $k => $v) {
             $query .= "{$k}='{$v}' {$method} ";
         }
         $query = rtrim($query,"{$method} ");
@@ -102,7 +108,11 @@ class ModelManager {
         if(count($data) > 0) {
             $result = $db->create(static::$table, $data);
             if($result) {
-                return static::toObject(static::getByArray($data));
+                $arr = static::getByArray($data);
+                if(count($arr) > 0) {
+                    $arr = $arr[0];
+                }
+                return static::toObject($arr);
             }
         }
         return false;
