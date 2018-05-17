@@ -10,25 +10,8 @@
                   </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <blockquote class="blockquote">
-                            <p>Buscar</p>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Buscar" aria-describedby="helpId">
-                                <small id="helpId" class="text-muted">Busca por Nombre, Apellidos, Email o teléfono</small>
-                            </div>
-                        </blockquote>
-
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">...</a>
-                            <a href="#" class="list-group-item list-group-item-action">...</a>
-                            <a href="#" class="list-group-item list-group-item-action">...</a>
-                            <a href="#" class="list-group-item list-group-item-action">...</a>
-                        </div>
-                    </div>
-                </div>
+            <div id="buscar-paciente" class="col-12 col-sm-6">
+                <buscar-paciente></buscar-paciente>
             </div>
         </div>
     </div>

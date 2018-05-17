@@ -62,4 +62,46 @@ class PacientesController extends ControllerManager {
 			$this->redirect($helper->url("/404.html"));
 		}
 	}
+
+	public function editar($id=false) {
+		$data['page_name'] = "Editar Paciente";
+		$data['file_name'] = "pacientes/editar";
+		if($id) {
+			$paciente = Patient::getByID($id)[0];
+			$aid = $paciente['address_id'];
+
+			$address = Address::getByID($aid)[0];
+			unset($paciente['address_id']);
+			unset($paciente['medical_history_id']);
+
+			$paciente['address'] = $address;
+			$data['paciente'] = $paciente;
+		} else {
+			$data['error'] = "El paciente no existe.";
+		}
+		$this->view("base", $data);
+	}
+
+	public function guardarPaciente($id="undefined") {
+		global $helper, $db;
+		$data = $this->post_params();
+		Patient::edit($id, $data);
+		$this->redirect($helper->url("/paciente/{$id}"));
+	}
+
+	/**
+	 * API
+	 */
+
+	 public function apiBuscarPacientes($search="") {
+		 if(!empty($search)) {
+			$data['name'] = $search;
+			$data['lastname'] = $search;
+			$data['email'] = $search;
+			$data['phone'] = $search;
+			$pacientes = Patient::getByArray($data, "OR");
+			return json_encode($pacientes);
+		 }
+		 return [];
+	 }
 }

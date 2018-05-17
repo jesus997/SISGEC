@@ -32,6 +32,26 @@ $router->group(['before' => 'auth'], function($router){
 	$router->get(["{$P}/pacientes/nuevo", "nuevo-paciente"], ['Jess\Messenger\PacientesController', 'nuevo']);
 	$router->post(["{$P}/pacientes/nuevo", "guardar-paciente-nuevo"], ['Jess\Messenger\PacientesController', 'guardarNuevo']);
 	$router->get(["{$P}/paciente/{id}", "ver-paciente"], ['Jess\Messenger\PacientesController', 'verPaciente']);
-	
+	$router->get(["{$P}/paciente/{id}/editar", "editar-paciente"], ['Jess\Messenger\PacientesController', 'editar']);
+	$router->post(["{$P}/paciente/{id}/guardar", "guardar-paciente"], ['Jess\Messenger\PacientesController', 'guardarPaciente']);
+
+	$router->get(["{$P}/reportes/nuevo/{medical_history}", "nuevo-reporte"], ['Jess\Messenger\ReportesController', 'nuevo']);
+	$router->post(["{$P}/reportes/nuevo", "guardar-reporte"], ["Jess\Messenger\ReportesController", "guardarNuevo"]);
+	$router->get(["{$P}/reportes/patologicos/{medical_history}", "ver_patologicos"], ['Jess\Messenger\ReportesController', 'verPatologicos']);
+	$router->post(["{$P}/reportes/patologicos/{report_id}", "guardar_patologicos"], ['Jess\Messenger\ReportesController', 'guardarPatologicos']);
+	$router->get(["{$P}/reportes/padecimiento-actual/{report_id}", "ver_padecimiento_actual"], ['Jess\Messenger\ReportesController', 'verPadecimientoActual']);
+	$router->post(["{$P}/reportes/padecimiento-actual/{report_id}", "guardar_pad_act"], ['Jess\Messenger\ReportesController', 'guardarPadecimientoActual']);
+	$router->get(["{$P}/reportes/diagnostico/{report_id}", "ver_diagnostico"], ["Jess\Messenger\ReportesController", "verDiagnostico"]);
+	$router->post(["{$P}/reportes/diagnostico/{report_id}", "guardar_diagnostico"], ["Jess\Messenger\ReportesController", "guardarDiagnostico"]);
+	$router->get(["{$P}/reportes/tratamiento/{report_id}", "ver_tratamiento"], ["Jess\Messenger\ReportesController", "verTratamiento"]);
+	$router->post(["{$P}/reportes/tratamiento/{report_id}", "guardar_tratamiento"], ["Jess\Messenger\ReportesController", "guardarTratamiento"]);
+	$router->get(["{$P}/reportes/resumen/{report_id}", "ver_resumen"], ["Jess\Messenger\ReportesController", "verResumen"]);
+
+	/**
+	 * API
+	 */
+
+	$router->get(["{$P}/api/buscar/pacientes/{search}", "api.pacientes"], ['Jess\Messenger\PacientesController', 'apiBuscarPacientes']);
+
 	$router->get(["{$P}/logout", 'logout'],  ['Jess\Messenger\AuthController', 'logout']);
 });

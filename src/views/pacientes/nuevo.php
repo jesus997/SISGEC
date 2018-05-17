@@ -49,7 +49,15 @@
                     <input type="text" class="form-control" name="religion" placeholder="Religión">
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" name="scholarship" placeholder="Escolaridad">
+                    <select id="escolaridad" class="form-control" name="scholarship">
+                        <option value="Nula">Nula</option>
+                        <option value="Primaria">Primaria</option>
+                        <option value="Secundaria">Secundaria</option>
+                        <option value="Preparatoria">Preparatoria</option>
+                        <option value="Universidad">Universidad</option>
+                        <option value="Maestria">Maestria</option>
+                        <option value="Doctorado">Doctorado</option>
+                    </select>
                 </div>
             </div>
             <dinamic-address></dinamic-address>
@@ -63,7 +71,7 @@
             </div>
             <div class="form-group row my-3">
                 <div class="col-12 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Siguiente</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </form>

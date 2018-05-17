@@ -2,6 +2,7 @@ const jQuery = require('jquery');
 const Vue = require('vue/dist/vue.js');
 
 import AddressComponent from '../vue/Address.vue';
+import BuscarPaciente from '../vue/BuscarPaciente.vue';
 
 import '../../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import '../../node_modules/air-datepicker/dist/js/datepicker.min.js';
@@ -30,6 +31,11 @@ import '../../node_modules/intl-tel-input/build/css/intlTelInput.css';
             placeholder: "Colonia / Pueblo"
         });
 
+        $('#escolaridad').select2({
+            tags: true,
+            placeholder: "Escolaridad"
+        });
+
         $("#phone").intlTelInput({
             initialCountry: "auto",
             geoIpLookup: function(callback) {
@@ -39,11 +45,22 @@ import '../../node_modules/intl-tel-input/build/css/intlTelInput.css';
               });
             }
         });
+
+        /** VUE */
+
+        Vue.component('dinamic-address', AddressComponent);
+        Vue.component('buscar-paciente', BuscarPaciente);
+
+        if($("#nuevo-paciente").length > 0) {
+            new Vue({
+                el: '#nuevo-paciente'
+            });
+        }
+
+        if($("#buscar-paciente").length > 0) {
+            new Vue({
+                el: '#buscar-paciente'
+            });
+        }
     });
 })(jQuery);
-
-Vue.component('dinamic-address', AddressComponent);
-
-new Vue({
-    el: '#nuevo-paciente'
-});

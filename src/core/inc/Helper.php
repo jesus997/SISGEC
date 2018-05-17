@@ -7,12 +7,13 @@ class Helper {
         return $config->get("site.url").$slug;
     }
 
-    function dd($arr, $arr2=false) {
+    function dd($arr, $arr2=true) {
         echo "<pre>"; print_r($arr); echo "</pre>";
         if(is_array($arr2)) {
             echo "<pre>"; print_r($arr2); echo "</pre>";
+        } else if( $arr2 ) {
+            die();
         }
-        die();
     }
 
     function localImage($url) {
@@ -65,6 +66,13 @@ class Helper {
         if($date1 > $date2) return 1;
         if($date2 > $date1) return -1;
         return 0;
+    }
+
+    function humanFecha($date) {
+        date_default_timezone_set('UTC');
+        date_default_timezone_set("America/Mexico_City");
+        setlocale(LC_TIME, 'spanish');
+        return strftime("%A, %d %B %G", strtotime($date));
     }
 
     /**

@@ -11,8 +11,8 @@ class MedicalHistory extends ModelManager {
 	static protected $table = "medical_history";
 	static protected $id = "id";
 
-	public function getReports() {
-		$reports = Address::getAll($this->id);
+	static function getReports($id) {
+		$reports = Report::getByKey("medical_history_id",$id);
 		return $reports;
 	}
 }

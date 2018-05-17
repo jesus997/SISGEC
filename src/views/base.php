@@ -1,10 +1,14 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="UTF-8" />
   	<title><?= $config->get("site.name") ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/96cbd61ead.js"></script>
+    <script>
+      var SITE_URL = window.location.protocol+"//"+window.location.host+"<?= $helper->url("/") ?>";
+    </script>
     <script src="<?= $helper->url("/dist/importer.min.js") ?>"></script>
   </head>
 
@@ -15,6 +19,10 @@
         <div class="navbar-nav flex-row">
           <!-- LOGGED-IN NAVIGATION -->
           <?php if( $auth->check() ) { ?>
+            <nav class="nav justify-content-center">
+              <a class="nav-link active" href="<?= $helper->url("/pacientes"); ?>">Pacientes</a>
+              <a class="nav-link" href="<?= $helper->url("/recetas"); ?>">Recetas</a>
+            </nav>
             <!-- Only in desktop nav -->
             <div class="nav-item dropdown d-none d-sm-block">
               <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $auth->fullname ?></a>

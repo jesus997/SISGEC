@@ -69,10 +69,10 @@ class ModelManager {
 
     static function get($key, $value = "undefined") {
         $result = [];
-        if($value === "undefined") {
-            $result = static::getByID($key);
-        } else if(is_array($key)) {
+        if(is_array($key)) {
             $result = static::getByArray($key, $value === "undefined" ? "AND" : $value);
+        } else if($value === "undefined") {
+            $result = static::getByID($key);
         } else {
             $result = static::getByKey($key, $value);
         }
