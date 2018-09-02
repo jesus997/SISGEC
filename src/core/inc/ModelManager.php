@@ -63,8 +63,8 @@ class ModelManager {
 
 	static function getAll() {
         global $db;
-        $results = $db->query("SELECT * FROM {static::$table}");
-        return static::toObject(static::removeProtectedFields($results));
+        $results = $db->query("SELECT * FROM ".static::$table);
+        return static::removeProtectedFields($results);
     }
 
     static function get($key, $value = "undefined") {

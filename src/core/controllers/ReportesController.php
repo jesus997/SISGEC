@@ -36,12 +36,9 @@ class ReportesController extends ControllerManager {
 		$report = Report::new($report);
 		$report = new Report($report->id);
 		$section["name"] = "Heredo Familiares";
-		$section["slug"] = "heredo-familiares";
+		$section["slug"] = "heredo-familiares_".uniqid();
 		$section["parent"] = "Antecedentes";
-		$section = Section::get($section);
-		if(count((array)$section) < 1) {
-			$section = Section::new($section);
-		}
+		$section = Section::new($section);
 		$section = new Section($section->id);
 
 		foreach($data as $key => $value) {
@@ -71,15 +68,21 @@ class ReportesController extends ControllerManager {
 		$data = $this->clearArray($data);
 
 		$sectiond["name"] = "Personales Patologicos";
-		$sectiond["slug"] = "personales-patologicos";
+		$sectiond["slug"] = "personales-patologicos_".uniqid();
 		$sectiond["parent"] = "Antecedentes";
-		$section = Section::get($sectiond);
-		if(count((array)$section) < 1) {
-			$section = Section::new($sectiond);
-		}
+		$section = Section::new($sectiond);
 		$section = new Section($section->id);
 		
 		$report = new Report($report_id);
+
+		foreach($data as $key => $value) {
+			$record = [];
+			$record['name'] = $this->toTitle($key);
+			$record['value'] = $value;
+			$record['slug'] = $key."_".uniqid();
+			$record = Record::new($record);
+			$section->addRecord(["section_id" => $section->id, "record_id" => $record->id]);
+		}
 
 		$report->addSection(["report_id" => $report_id, "section_id" => $section->id]);
 
@@ -158,6 +161,7 @@ class ReportesController extends ControllerManager {
 		$data['reporte'] = Report::get($report_id);
 		$data['paciente'] = Patient::getByMedicalHistoryID($data['reporte']->medical_history_id);
 		$data['secciones'] = Report::getSections($report_id);
+		$data['recetas'] = Receta::getByKey("report_id", $report_id);
 		$this->view("base", $data);
 	}
 

@@ -26,7 +26,7 @@ $router->get(["{$P}/register", 'register'],  ['Jess\Messenger\AuthController', '
 
 $router->group(['before' => 'auth'], function($router){
 	global $P;
-	$router->get(["{$P}/", 'home'],  ['Jess\Messenger\HomeController', 'index']);
+	$router->get(["{$P}/", 'home'],  ['Jess\Messenger\PacientesController', 'index']);
 
 	$router->get(["{$P}/pacientes", "pacientes"], ['Jess\Messenger\PacientesController', 'index']);
 	$router->get(["{$P}/pacientes/nuevo", "nuevo-paciente"], ['Jess\Messenger\PacientesController', 'nuevo']);
@@ -46,6 +46,10 @@ $router->group(['before' => 'auth'], function($router){
 	$router->get(["{$P}/reportes/tratamiento/{report_id}", "ver_tratamiento"], ["Jess\Messenger\ReportesController", "verTratamiento"]);
 	$router->post(["{$P}/reportes/tratamiento/{report_id}", "guardar_tratamiento"], ["Jess\Messenger\ReportesController", "guardarTratamiento"]);
 	$router->get(["{$P}/reportes/resumen/{report_id}", "ver_resumen"], ["Jess\Messenger\ReportesController", "verResumen"]);
+
+	$router->get(["{$P}/recetas/nueva/{patient_id}/{report_id}", "nueva_receta"], ['Jess\Messenger\RecetasController', "nuevaReceta"]);
+	$router->post(["{$P}/recetas/nueva", "guardar_receta"], ['Jess\Messenger\RecetasController', "guardarReceta"]);
+	$router->get(["{$P}/recetas/ver/{recipe_id}", "ver_receta"], ['Jess\Messenger\RecetasController', "verReceta"]);
 
 	/**
 	 * API

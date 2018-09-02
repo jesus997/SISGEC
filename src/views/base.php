@@ -19,10 +19,6 @@
         <div class="navbar-nav flex-row">
           <!-- LOGGED-IN NAVIGATION -->
           <?php if( $auth->check() ) { ?>
-            <nav class="nav justify-content-center">
-              <a class="nav-link active" href="<?= $helper->url("/pacientes"); ?>">Pacientes</a>
-              <a class="nav-link" href="<?= $helper->url("/recetas"); ?>">Recetas</a>
-            </nav>
             <!-- Only in desktop nav -->
             <div class="nav-item dropdown d-none d-sm-block">
               <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $auth->fullname ?></a>
@@ -58,9 +54,13 @@
         <small class="copy">Copyright &copy; <?= date("Y") ?> <a href="http://yosoydev.net">YoSoyDev</a>. <br class="xs-only"/>All rights reserved.</small>
       </footer>
     </div>
+    <?php
 
-
-    <script src="<?= $helper->url("/dist/main.min.js") ?>"></script>
+    if($file_name === "reportes/resumen") { ?>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script> <?php
+    } ?>
+    <script src="<?= $helper->url("/dist/vue.min.js") ?>"></script>
     <script src="<?= $helper->url("/dist/Address.min.js") ?>"></script>
+    <script src="<?= $helper->url("/dist/main.min.js") ?>"></script>
   </body>
 </html>

@@ -1,8 +1,4 @@
 const jQuery = require('jquery');
-const Vue = require('vue/dist/vue.js');
-
-import AddressComponent from '../vue/Address.vue';
-import BuscarPaciente from '../vue/BuscarPaciente.vue';
 
 import '../../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import '../../node_modules/air-datepicker/dist/js/datepicker.min.js';
@@ -17,6 +13,35 @@ import '../../node_modules/select2/dist/css/select2.min.css';
 import '../../node_modules/intl-tel-input/build/css/intlTelInput.css';
 
 (function($) {
+    function savePageAsPDF() {
+        var pdf = new jsPDF('p', 'pt', 'letter'),
+        source = $('#ver-paciente')[0],
+
+        specialElementHandlers = {
+            '#bypassme': function (element, renderer) {
+                return true
+            }
+        },
+        margins = {
+            top: 20,
+            bottom: 20,
+            left: 40,
+            width: 522
+        };
+
+        pdf.fromHTML(
+            source, 
+            margins.left, // x coord
+            margins.top, { // y coord
+                'width': margins.width, 
+                'elementHandlers': specialElementHandlers
+            },
+
+            function (dispose) {
+                pdf.save('Reporte Medico.pdf');
+            }, margins
+        );
+    }
     $('document').ready(function() {
         $("#fecha-nacimiento").datepicker({
             language: 'es',
@@ -26,14 +51,14 @@ import '../../node_modules/intl-tel-input/build/css/intlTelInput.css';
             autoClose: true
         });
 
-        $("#colonia").select2({
-            tags: true,
-            placeholder: "Colonia / Pueblo"
-        });
-
         $('#escolaridad').select2({
             tags: true,
             placeholder: "Escolaridad"
+        });
+
+        $("#colonia").select2({
+            tags: true,
+            placeholder: "Colonia / Pueblo"
         });
 
         $("#phone").intlTelInput({
@@ -46,21 +71,8 @@ import '../../node_modules/intl-tel-input/build/css/intlTelInput.css';
             }
         });
 
-        /** VUE */
-
-        Vue.component('dinamic-address', AddressComponent);
-        Vue.component('buscar-paciente', BuscarPaciente);
-
-        if($("#nuevo-paciente").length > 0) {
-            new Vue({
-                el: '#nuevo-paciente'
-            });
-        }
-
-        if($("#buscar-paciente").length > 0) {
-            new Vue({
-                el: '#buscar-paciente'
-            });
-        }
+        $("#imprimir-resumen").click(function() {
+            savePageAsPDF();
+        });
     });
 })(jQuery);

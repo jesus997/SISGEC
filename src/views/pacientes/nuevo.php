@@ -60,7 +60,9 @@
                     </select>
                 </div>
             </div>
-            <dinamic-address></dinamic-address>
+            <div id="address-zone">
+                <dinamic-address></dinamic-address>
+            </div>
             <div class="row my-3">
                 <div class="col">
                     <input id="phone" type="text" class="form-control" name="phone" placeholder="Teléfono">

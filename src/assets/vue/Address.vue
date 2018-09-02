@@ -37,6 +37,7 @@
 
 <script>
     import axios from 'axios';
+    import $ from 'jquery';
     export default {
         props: {
             errorClass: {

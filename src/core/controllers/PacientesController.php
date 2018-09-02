@@ -43,6 +43,7 @@ class PacientesController extends ControllerManager {
 			$patient = Patient::new($data);
 			if( count($db->getErrors()) > 0 ) {
 				$this->nuevo("Ha ocurrido un error al guardar la información. Por favor intentelo de nuevo.");
+				return false;
 			}
 			$this->redirect($helper->url("/paciente/{$patient->id}"));
 		} else {
