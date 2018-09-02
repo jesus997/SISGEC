@@ -13,7 +13,7 @@ session_start();
 include_once(__DIR__."/../vendor/autoload.php");
 include_once(__DIR__."/inc/ConfigManager.php");
 include_once(__DIR__."/inc/Helper.php");
-include_once(__DIR__."/db/Connection.php");
+include_once(__DIR__."/db/connection.php");
 include_once(__DIR__."/inc/Auth.php");
 include_once(__DIR__."/inc/ModelManager.php");
 include_once(__DIR__."/inc/ControllerManager.php");
