@@ -4,7 +4,7 @@ namespace Jess\Messenger;
 class Helper {
     function url($slug) {
         global $config;
-        $site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         return $site.$config->get("site.url").$slug;
     }
 
@@ -19,7 +19,7 @@ class Helper {
 
     function localImage($url) {
         global $config;
-        $site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         return \str_replace("{local}", $site.$config->get("site.url", "/"), $url);
     } 
 

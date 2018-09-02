@@ -8,10 +8,10 @@ $P = $config->get("site.url");
 
 $router->filter('auth', function(){
 	global $auth, $router, $P;
-	$site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+	$site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 	if(!$auth->check()) {
 		$site .= $P;
-		header("Location: {$site}/login");
+		header("Location: {$site}login");
 	}
 });
 
