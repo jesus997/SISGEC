@@ -4,7 +4,7 @@ return [
 	'site' => array(
 		'name' => 'SISGEC',
 		'description' => 'Sistema de Gestion de Expedientes Clinicos',
-		'url' => '/SISGEC/WS/src'
+		'url' => '/'
 	),
 	'db' => array(
 		'server' => 'localhost',
