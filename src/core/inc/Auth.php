@@ -9,7 +9,7 @@ class Auth {
 	protected $user_data;
 
     public function __get($varName){
-
+		if(empty($user_data)) $user_data = [];
         if (!array_key_exists($varName,$this->user_data)){
 			if($varName === "fullname") {
 				return $this->get("fullname");
@@ -21,7 +21,7 @@ class Auth {
     }
   
     public function __set($varName,$value){
-        $this->model_data[$varName] = $value;
+        $this->user_data[$varName] = $value;
     }
 
 	function __construct() {
