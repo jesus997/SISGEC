@@ -7,7 +7,7 @@
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/96cbd61ead.js"></script>
     <script>
-      var SITE_URL = window.location.protocol+"//"+window.location.host+"<?= $helper->url("/") ?>";
+      var SITE_URL = "<?= $helper->url("/") ?>";
     </script>
     <script src="<?= $helper->url("/dist/importer.min.js") ?>"></script>
   </head>
