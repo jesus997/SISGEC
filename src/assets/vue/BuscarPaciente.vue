@@ -10,8 +10,8 @@
             </blockquote>
 
             <div class="list-group">
-                <a v-for="(pac, index) in pacientes" v-bind:key="index" v-bind:value="pac" :href="'/SISGEC/WS/src/paciente/'+pac.id" class="list-group-item list-group-item-action">{{ pac.name+" "+pac.lastname }}</a>
-                <img class="d-block mx-auto" v-if="loading" src="/SISGEC/WS/src/assets/imgs/loading.gif" width="100" height="100" />
+                <a v-for="(pac, index) in pacientes" v-bind:key="index" v-bind:value="pac" :href="'/paciente/'+pac.id" class="list-group-item list-group-item-action">{{ pac.name+" "+pac.lastname }}</a>
+                <img class="d-block mx-auto" v-if="loading" src="/assets/imgs/loading.gif" width="100" height="100" />
                 <p class="mb-0 text-center" v-if="loading">Buscando...</p>
                 <p class="mb-0 text-center" v-if="notFound">No se han encontrado resultados. Intentelo de nuevo con un campo diferente.</p>
             </div>
