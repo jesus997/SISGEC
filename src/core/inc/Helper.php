@@ -2,8 +2,19 @@
 namespace Jess\Messenger;
 
 class Helper {
+    function str_starts_with($haystack, $needle) {
+        return substr_compare($haystack, $needle, 0, strlen($needle)) === 0;
+    }
+
+    function str_ends_with($haystack, $needle) {
+        return substr_compare($haystack, $needle, -strlen($needle)) === 0;
+    }
+
     function url($slug) {
         global $config;
+        if($this->str_starts_with($slug, "/")) {
+            $slug = substr($slug, 1);
+        }
         $site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         return $site.$config->get("site.url").$slug;
     }
